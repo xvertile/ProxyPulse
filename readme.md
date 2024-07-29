@@ -12,8 +12,11 @@ ProxyPulse is a real-time monitoring tool for system metrics, specifically for m
 ## Prerequisites
 
 - Ubuntu 18.04 or later
+- Requires the process to be registered as a system service (/etc/systemd/system/proxy.service). See the System Process section for more information.
 
 ## Install
+
+```bash
 You can install ProxyPulse with a single command:
 
 ```bash
@@ -37,6 +40,37 @@ The application displays the following information:
 - Memory Usage (GB)
 
 Each metric is displayed as a line graph in the terminal.
+
+## System Process
+I recommend running any proxy server as a system process to ensure that it runs in the background and restarts automatically in case of a failure. This also allows to set the ulimit values for the process, which is essential for a proxy server that requires a high number of file descriptors. This is set via the `LimitNOFILE` parameter in the systemd service file.
+
+You can make a system process with the following steps:
+- 1 - Create a new file in `/etc/systemd/system/proxy.service`
+- 2 - Add the following content to the file:
+```bash
+[Unit]
+Description=My Awesome Proxy Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/root/proxy/proxy
+WorkingDirectory=/root/proxy/proxy
+Restart=on-failure
+RestartSec=1s
+StartLimitBurst=100
+StartLimitIntervalSec=3600
+[Install]
+WantedBy=multi-user.target
+```
+- 3 - Reload the systemd manager configuration with the following command:
+```bash
+systemctl daemon-reload
+```
+- 4 - Start the service with the following command:
+```bash
+sudo service proxy start
+```
 
 ## Contributing
 
