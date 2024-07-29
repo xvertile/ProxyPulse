@@ -16,7 +16,6 @@ ProxyPulse is a real-time monitoring tool for system metrics, specifically for m
 
 ## Install
 
-```bash
 You can install ProxyPulse with a single command:
 
 ```bash
