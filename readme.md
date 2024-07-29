@@ -12,7 +12,7 @@ ProxyPulse is a real-time monitoring tool for system metrics, specifically for m
 ## Prerequisites
 
 - Ubuntu 18.04 or later
-- Requires the process to be registered as a system service (/etc/systemd/system/proxy.service). See the System Process section for more information.
+- Requires the proxy server to be registered as a system service (/etc/systemd/system/proxy.service). See the [System Process](#system-process) section for more information.
 
 ## Install
 
